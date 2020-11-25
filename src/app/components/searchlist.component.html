@@ -1,0 +1,25 @@
+<div class="my-2 d-flex justify-content-between align-items-center">
+  <h3>My Searches</h3>
+  <button type="button" class="btn btn-primary btn-sm" [routerLink]="['/search']">Search for Anime</button>
+</div>
+
+<div class="list-group my-4">
+  <div *ngIf="searches.length === 0">
+    <span class="text-center text-muted font-weight-bold">
+      You have no prior searches 🤨 <br>
+      Search something!
+    </span>
+  </div>
+
+  <div *ngIf="searches.length > 0">
+    <a *ngFor="let search of searches, let i = index" [routerLink]="['/result', search.type, search.q ]" class="list-group-item list-group-item-action d-flex justify-content-between">
+      <span>
+        <i class="fas fa-search mr-3"></i>
+        {{ search.q }}
+      </span>
+      <span>
+        {{ media[search.type] }}
+      </span>
+    </a>
+  </div>
+</div>
