@@ -18,7 +18,7 @@ export class MainComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  gotoList() {
-    this.router.navigate([ '/searchlist' ])
+  gotoSearch() {
+    this.router.navigate([ '/search' ])
   }
 }
