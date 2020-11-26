@@ -27,7 +27,8 @@ export class ResultComponent implements OnInit {
 
   fetchResultsFromApi(type) {
     const queryParams: HttpParams = new HttpParams().set("q", this.q)
-    const r = this.http.get(`https://api.jikan.moe/v3/search/${type}`, { params: queryParams }).toPromise()
+    const r = this.http.get<any>(`https://api.jikan.moe/v3/search/${type}`, { params: queryParams })
+      .toPromise()
       .then(data => this.results = data.results )
       .catch((error: HttpErrorResponse) => console.info(error) )
     console.info(r)
