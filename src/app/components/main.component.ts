@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, NgZone, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { AnimationOptions } from 'ngx-lottie';
 
@@ -13,12 +13,14 @@ export class MainComponent implements OnInit {
     path: '/assets/kitty.json'
   }
 
-  constructor(private router: Router) { }
+  constructor(private router: Router, private ngZone: NgZone) { }
 
   ngOnInit(): void {
   }
 
   gotoSearch() {
-    this.router.navigate([ '/search' ])
+    this.ngZone.run(() => {
+      this.router.navigate([ '/search' ])
+    })
   }
 }

@@ -3,6 +3,7 @@ import { Router, ActivatedRoute, Params } from '@angular/router';
 import { HttpClient, HttpErrorResponse, HttpParams } from '@angular/common/http';
 
 import { Type } from '../models'
+import { NgNavigatorShareService } from 'ng-navigator-share';
 
 @Component({
   selector: 'app-result',
@@ -14,10 +15,12 @@ export class ResultComponent implements OnInit {
   q = ''
   type = ''
   results = []
+  canShare = false
 
-  constructor(private router: Router, private activatedRoute: ActivatedRoute, private http: HttpClient) { }
+  constructor(private router: Router, private activatedRoute: ActivatedRoute, private http: HttpClient, private webShare: NgNavigatorShareService) { }
 
   ngOnInit(): void {
+    this.canShare = this.webShare.canShare()
     this.type = Type[this.activatedRoute.snapshot.params['type']].toLowerCase()
     this.q = this.activatedRoute.snapshot.params['q']
     // Get HTTP response from Jikan then set as results[]
@@ -32,5 +35,15 @@ export class ResultComponent implements OnInit {
       .then(data => this.results = data.results )
       .catch((error: HttpErrorResponse) => console.info(error) )
     console.info(r)
+  }
+
+  shareThis(index: number) {
+    const r = this.results[index]
+    this.webShare.share({
+      title: r.title,
+      text: r.sypnosis,
+      url: r.url
+    })
+    .catch(e => console.info('WebShare:  ', e))
   }
 }
