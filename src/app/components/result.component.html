@@ -1,27 +1,36 @@
-<div class="my-2 d-flex justify-content-between align-items-center">
-  <p>You searched for {{ q }} in {{ type }}</p>
-  
-  <button class="btn btn-primary btn-sm" [routerLink]="['/search']">Back</button>
+<div class="my-4">
+  <div class="d-flex justify-content-between align-items-center">
+    <h3>Results for: </h3>
+    <h4>
+      <i class="fas fa-undo-alt" [routerLink]="['/search']"></i>
+    </h4>
+  </div>
+  <span class="btn btn-primary btn-sm mr-2"><i class="fas fa-search mr-1"></i> {{q}}</span>
+  <span class="btn btn-primary btn-sm"><i class="fas fa-search mr-1"></i> {{type}}</span>  
+  <div class="text-left my-3">
+    <div *ngIf="results.length > 0; then yay else nay">
+    </div>
+    <ng-template #yay>
+      Hooray! Your search returned {{ results.length }} results 🥳
+    </ng-template>
+    <ng-template #nay>
+      Oops, your search returned no results 😩
+    </ng-template>
+  </div>
 </div>
 
-<div class="text-left my-3">
-  <div *ngIf="results.length > 0; then yay else nay">
-  </div>
-  <ng-template #yay>
-    Hooray! Your search returned {{ results.length }} results 🥳
-  </ng-template>
-  <ng-template #nay>
-    Oops, your search returned no results 😩
-  </ng-template>
-</div>
-    
 <div class="my-4 d-flex flex-column align-items-center">
   <div *ngFor="let result of results, let i = index" class="card m-2" style="width: 18rem;">
     <img class="card-img-top" src="{{ result.image_url }}" alt="Card image cap">
     <div class="card-body">
       <h5 class="card-title">{{ result.title }}</h5>
       <p class="card-text">{{ result.synopsis }}</p>
-      <a href="{{ result.url }}" class="btn btn-primary" target="_blank">Read more</a>
+      <div class="d-flex justify-content-between align-items-center">
+        <a href="{{ result.url }}" class="btn btn-primary btn-sm" target="_blank">Read more</a>
+        <h4>
+          <i *ngIf="canShare" class="fas fa-share-alt text-muted align-items-center" (click)="shareThis(i)"></i>
+        </h4>
+      </div>
     </div>
   </div>
 </div>

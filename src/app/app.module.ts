@@ -22,7 +22,7 @@ import { AnimeDatabase } from './searches.database';
 // Configure routes
 const ROUTES: Routes = [
   { path: '', component: MainComponent },
-  { path: 'searchlist', component: SearchlistComponent },
+  // { path: 'searchlist', component: SearchlistComponent },
   { path: 'search', component: SearchComponent },
   { path: 'result/:type/:q', component: ResultComponent },
   { path: '**', redirectTo: '/', pathMatch: 'full' }
